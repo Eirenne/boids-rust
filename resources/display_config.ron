@@ -1,0 +1,4 @@
+(
+  title: "Boids",
+  dimensions: Some((800, 400)),
+)
