@@ -10,6 +10,10 @@ use amethyst::{
 
 use log::info;
 
+use rand::{thread_rng, Rng};
+
+use std::f32::consts::PI;
+
 use crate::components::boid::Boid;
 
 pub struct GameState;
@@ -91,21 +95,23 @@ fn load_boid(world: &mut World) -> SpriteRender {
 }
 
 fn init_boids(world: &mut World, dimensions: &ScreenDimensions, sprite: SpriteRender) {
-    let mut boid_transform = Transform::default();
+    let (left, right, bottom, top) = {
+        (0.0, dimensions.width(), 0.0, dimensions.height())
+    };
 
-    let y = dimensions.height() / 2.0;
-    boid_transform.set_scale(Vector3::from_element(0.3));
-    boid_transform.set_translation_xyz(dimensions.width() / 2.0, y, 0.0);
-
-    world.register::<Boid>();
-    // Create a left plank entity.
-    world
-        .create_entity()
-        .with(sprite.clone())
-        .with(Boid::new())
-        .with(boid_transform)
-        .build();
-
-
+    let mut rng = thread_rng();
+    for _ in 0..25 {
+        let x = rng.gen_range(left, right);
+        let y = rng.gen_range(bottom, top);
+        let mut transform = Transform::default();
+        transform.set_translation_xyz(x, y, 0.0);
+        transform.set_scale(Vector3::from_element(0.3));
+        transform.set_rotation_euler(0.0, 0.0, rng.gen_range(0.0f32, PI));
+        world.create_entity()
+            .with(sprite.clone())
+            .with(Boid::new())
+            .with(transform)
+            .build();
+    }
 
 }

@@ -22,6 +22,7 @@ fn main() -> amethyst::Result<()> {
     let display_config = resources.join("display_config.ron");
 
     let game_data = GameDataBuilder::default()
+        .with(systems::swarm::SwarmSystem, "swarm_system", &[])
         .with_bundle(TransformBundle::new())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
