@@ -14,7 +14,7 @@ use rand::{thread_rng, Rng};
 
 use std::f32::consts::PI;
 
-use crate::components::boid::Boid;
+use crate::components::boid::{Boid, Acceleration, Velocity};
 
 pub struct GameState;
 
@@ -111,6 +111,8 @@ fn init_boids(world: &mut World, dimensions: &ScreenDimensions, sprite: SpriteRe
             .with(sprite.clone())
             .with(Boid::new())
             .with(transform)
+            .with(Acceleration::new())
+            .with(Velocity::new())
             .build();
     }
 

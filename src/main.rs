@@ -22,7 +22,11 @@ fn main() -> amethyst::Result<()> {
     let display_config = resources.join("display_config.ron");
 
     let game_data = GameDataBuilder::default()
-        .with(systems::swarm::SwarmSystem, "swarm_system", &[])
+        .with(systems::separation::SeparationSystem, "separation_system", &[])
+        .with(systems::cohesion::CohesionSystem, "cohesion_system", &[])
+        .with(systems::alignment::AlignmentSystem, "alignment_system", &[])
+        .with(systems::movement::MovementSystem, "movement_system", &["separation_system",
+            "cohesion_system", "alignment_system"])
         .with_bundle(TransformBundle::new())?
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
