@@ -17,7 +17,7 @@ impl<'s> System<'s> for SeparationSystem {
     );
 
     fn run(&mut self, (boids, mut accelerations): Self::SystemData) {
-        for (boid, acceleration) in (&boids, &mut accelerations).join() {
+        for (_boid, acceleration) in (&boids, &mut accelerations).join() {
 //            TODO implement separation
             acceleration.acceleration += Vector2::new(0.0, 0.0);
         }

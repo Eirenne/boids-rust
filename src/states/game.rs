@@ -8,6 +8,8 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
+use std::f32::consts::PI;
+
 use log::info;
 
 use rand::{thread_rng, Rng};
@@ -106,15 +108,11 @@ fn init_boids(world: &mut World, dimensions: &ScreenDimensions, sprite: SpriteRe
         transform.set_scale(Vector3::from_element(0.3));
         let direction:Vector2<f32> = Vector2::new(rng.gen_range(-1.0, 1.0), rng.gen_range(-1.0,1.0)).normalize();
 
-        let inv = -direction;
-        let mut roll = inv.x.atan2(inv.y);
-        // println!("{}", roll);
-
+        let roll = direction.y.atan2(direction.x);
 
         // Update local translation.
+        transform.set_rotation_euler(0.0, 0.0, roll - PI/2.0);
 
-
-        transform.set_rotation_euler(0.0, 0.0, roll);
         world.create_entity()
             .with(sprite.clone())
             .with(Boid::new())
