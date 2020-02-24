@@ -2,7 +2,7 @@ use amethyst::{
     core::timing::Time,
     core::transform::Transform,
     core::SystemDesc,
-    core::math::{UnitQuaternion, Vector2},
+    core::math::{Vector2},
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
 };

@@ -7,7 +7,6 @@ use amethyst::{
 };
 
 use crate::components::boid::{Boid, Acceleration, Velocity};
-use std::ops::Div;
 
 pub const ALIGNMENT_RADIUS: f32 = 50.0;
 pub const MAX_SPEED: f32 = 50.0;
@@ -38,10 +37,7 @@ impl<'s> System<'s> for AlignmentSystem {
 
             let difference = desired - velocity.velocity;
 
-            if difference.x != 0.0 || difference.y != 0.0 {
-                acceleration.acceleration += difference;
-            }
-            // acceleration.acceleration += Vector2::new(2.0, 2.0);
+            acceleration.acceleration += difference;
         }
     }
 }

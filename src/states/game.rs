@@ -1,7 +1,7 @@
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    core::math::{UnitQuaternion, Vector2, Vector3},
+    core::math::{Vector2, Vector3},
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
