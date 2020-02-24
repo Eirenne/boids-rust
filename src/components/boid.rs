@@ -28,9 +28,9 @@ pub struct Velocity {
 }
 
 impl Velocity {
-    pub fn new() -> Velocity {
+    pub fn new(velocity: Vector2<f32>) -> Velocity {
         Velocity {
-            velocity: Vector2::new(1.0, 1.0)
+            velocity
         }
     }
 }

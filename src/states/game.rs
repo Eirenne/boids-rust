@@ -1,7 +1,7 @@
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    core::math::Vector3,
+    core::math::{UnitQuaternion, Vector2, Vector3},
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
@@ -11,8 +11,6 @@ use amethyst::{
 use log::info;
 
 use rand::{thread_rng, Rng};
-
-use std::f32::consts::PI;
 
 use crate::components::boid::{Boid, Acceleration, Velocity};
 
@@ -100,19 +98,29 @@ fn init_boids(world: &mut World, dimensions: &ScreenDimensions, sprite: SpriteRe
     };
 
     let mut rng = thread_rng();
-    for _ in 0..25 {
+    for _ in 0..100 {
         let x = rng.gen_range(left, right);
         let y = rng.gen_range(bottom, top);
         let mut transform = Transform::default();
         transform.set_translation_xyz(x, y, 0.0);
         transform.set_scale(Vector3::from_element(0.3));
-        transform.set_rotation_euler(0.0, 0.0, rng.gen_range(0.0f32, PI));
+        let direction:Vector2<f32> = Vector2::new(rng.gen_range(-1.0, 1.0), rng.gen_range(-1.0,1.0)).normalize();
+
+        let inv = -direction;
+        let mut roll = inv.x.atan2(inv.y);
+        // println!("{}", roll);
+
+
+        // Update local translation.
+
+
+        transform.set_rotation_euler(0.0, 0.0, roll);
         world.create_entity()
             .with(sprite.clone())
             .with(Boid::new())
             .with(transform)
             .with(Acceleration::new())
-            .with(Velocity::new())
+            .with(Velocity::new(direction*5.0))
             .build();
     }
 
