@@ -9,7 +9,7 @@ use amethyst::{
 use crate::components::boid::{Boid, Acceleration, Velocity};
 
 pub const SEPARATION_RADIUS: f32 = 20.0;
-pub const MAX_SPEED: f32 = 50.0;
+pub const MAX_SPEED: f32 = 500.0;
 
 #[derive(SystemDesc)]
 pub struct SeparationSystem;

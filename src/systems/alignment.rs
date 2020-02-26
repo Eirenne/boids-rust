@@ -9,7 +9,7 @@ use amethyst::{
 use crate::components::boid::{Boid, Acceleration, Velocity};
 
 pub const ALIGNMENT_RADIUS: f32 = 50.0;
-pub const MAX_SPEED: f32 = 50.0;
+pub const MAX_SPEED: f32 = 500.0;
 
 fn dist(pos1: Vector3<f32>, pos2: Vector3<f32>) -> f32 {
     ((pos1.x - pos2.x).powf(2.0) + (pos1.y-pos2.y).powf(2.0)).sqrt()
