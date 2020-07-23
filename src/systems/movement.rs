@@ -9,6 +9,8 @@ use amethyst::{
 
 use std::f32::consts::PI;
 
+pub const MAX_SPEED: f32 = 150.0;
+
 use crate::components::boid::{Boid, Acceleration, Velocity};
 
 #[derive(SystemDesc)]
@@ -26,6 +28,9 @@ impl<'s> System<'s> for MovementSystem {
     fn run(&mut self, (boids, mut accelerations, mut velocities, mut locals, time): Self::SystemData) {
         for (_boid, acceleration, velocity, local) in (&boids, &mut accelerations, &mut velocities, &mut locals).join() {
             velocity.velocity += acceleration.acceleration * time.delta_seconds();
+            if velocity.velocity.norm_squared() > MAX_SPEED*MAX_SPEED {
+                velocity.velocity = velocity.velocity.normalize() * MAX_SPEED
+            }
 
             local.prepend_translation_x(velocity.velocity[0] * time.delta_seconds());
             local.prepend_translation_y(velocity.velocity[1] * time.delta_seconds());
