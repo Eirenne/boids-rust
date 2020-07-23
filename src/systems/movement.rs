@@ -2,7 +2,7 @@ use amethyst::{
     core::timing::Time,
     core::transform::Transform,
     core::SystemDesc,
-    core::math::{Vector2},
+    core::math::Vector3,
     derive::SystemDesc,
     ecs::prelude::{Join, Read, ReadStorage, System, SystemData, World, WriteStorage},
 };
@@ -26,7 +26,6 @@ impl<'s> System<'s> for MovementSystem {
     fn run(&mut self, (boids, mut accelerations, mut velocities, mut locals, time): Self::SystemData) {
         for (_boid, acceleration, velocity, local) in (&boids, &mut accelerations, &mut velocities, &mut locals).join() {
             velocity.velocity += acceleration.acceleration * time.delta_seconds();
-            // velocity.velocity = velocity.velocity.normalize()*50.0;
 
             local.prepend_translation_x(velocity.velocity[0] * time.delta_seconds());
             local.prepend_translation_y(velocity.velocity[1] * time.delta_seconds());
@@ -38,7 +37,7 @@ impl<'s> System<'s> for MovementSystem {
             local.set_rotation_euler(0.0, 0.0, roll - PI/2.0);
 
             // Reset acceleration vector
-            acceleration.acceleration = Vector2::zeros();
+            acceleration.acceleration = Vector3::zeros();
         }
     }
 }

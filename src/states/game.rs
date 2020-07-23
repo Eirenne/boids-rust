@@ -1,7 +1,7 @@
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    core::math::{Vector2, Vector3},
+    core::math::{Vector3},
     input::{get_key, is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
     renderer::{Camera, ImageFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture},
@@ -106,7 +106,7 @@ fn init_boids(world: &mut World, dimensions: &ScreenDimensions, sprite: SpriteRe
         let mut transform = Transform::default();
         transform.set_translation_xyz(x, y, 0.0);
         transform.set_scale(Vector3::from_element(0.3));
-        let direction:Vector2<f32> = Vector2::new(rng.gen_range(-1.0, 1.0), rng.gen_range(-1.0,1.0)).normalize();
+        let direction:Vector3<f32> = Vector3::new(rng.gen_range(-1.0, 1.0), rng.gen_range(-1.0,1.0), 0.0).normalize();
 
         let roll = direction.y.atan2(direction.x);
 
@@ -115,10 +115,10 @@ fn init_boids(world: &mut World, dimensions: &ScreenDimensions, sprite: SpriteRe
 
         world.create_entity()
             .with(sprite.clone())
-            .with(Boid::new())
+            .with(Boid::default())
             .with(transform)
             .with(Acceleration::new())
-            .with(Velocity::new(direction*5.0))
+            .with(Velocity::new(direction*100.0))
             .build();
     }
 

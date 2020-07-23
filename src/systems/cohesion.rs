@@ -1,6 +1,6 @@
 use amethyst::{
     core::SystemDesc,
-    core::math::{Vector2, Vector3},
+    core::math::{Vector3},
     core::transform::Transform,
     derive::SystemDesc,
     ecs::prelude::{Join, ReadStorage, System, SystemData, World, WriteStorage},
@@ -12,7 +12,7 @@ use crate::components::boid::{Boid, Acceleration, Velocity};
 pub struct CohesionSystem;
 
 pub const COHESION_RADIUS: f32 = 100.0;
-pub const MAX_SPEED: f32 = 500.0;
+pub const MAX_SPEED: f32 = 130.0;
 
 impl<'s> System<'s> for CohesionSystem {
     type SystemData = (
@@ -35,7 +35,7 @@ impl<'s> System<'s> for CohesionSystem {
                     .component_div(&Vector3::new(positions.len() as f32, positions.len() as f32, positions.len() as f32)) - local.translation();
 
 
-                let force = Vector2::new(desired.x, desired.y).normalize() * MAX_SPEED - velocity.velocity;
+                let force = desired.normalize() * MAX_SPEED - velocity.velocity;
                 acceleration.acceleration += force;
             }
 

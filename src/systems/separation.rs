@@ -1,6 +1,6 @@
 use amethyst::{
     core::SystemDesc,
-    core::math::{Vector3, Vector2},
+    core::math::{Vector3},
     derive::SystemDesc,
     core::transform::Transform,
     ecs::prelude::{Join, ReadStorage, System, SystemData, World, WriteStorage},
@@ -9,7 +9,7 @@ use amethyst::{
 use crate::components::boid::{Boid, Acceleration, Velocity};
 
 pub const SEPARATION_RADIUS: f32 = 20.0;
-pub const MAX_SPEED: f32 = 500.0;
+pub const MAX_SPEED: f32 = 260.0;
 
 #[derive(SystemDesc)]
 pub struct SeparationSystem;
@@ -33,7 +33,7 @@ impl<'s> System<'s> for SeparationSystem {
                 }).sum();
 
             if desired.x != 0.0 || desired.y != 0.0 {
-                let difference = Vector2::new(desired.x, desired.y).normalize() * MAX_SPEED - velocity.velocity;
+                let difference = desired.normalize() * MAX_SPEED - velocity.velocity;
                 acceleration.acceleration += difference;
             }
         }
