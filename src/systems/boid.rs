@@ -6,7 +6,7 @@ use amethyst::{
     ecs::prelude::{Join, ReadStorage, System, SystemData, World, WriteStorage, Entities},
 };
 
-use crate::components::boid::{Boid, Acceleration, Velocity};
+use crate::components::boid::{Boid, Acceleration, Velocity, VectorExt};
 
 
 
@@ -108,9 +108,9 @@ impl<'s> System<'s> for BoidSystem {
             }
 
             acceleration.acceleration += Vector3::new(border_steer[0], border_steer[1], 0.0);
-            acceleration.acceleration += alignment_force * 1.0;
-            acceleration.acceleration += cohesion_force * 1.0;
-            acceleration.acceleration += separation_force * 1.5;
+            acceleration.acceleration += alignment_force.limit(MAX_SPEED) * 2.0;
+            acceleration.acceleration += cohesion_force.limit(MAX_SPEED) * 1.0;
+            acceleration.acceleration += separation_force.limit(MAX_SPEED) * 1.5;
 
         }
     }

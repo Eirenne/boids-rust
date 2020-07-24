@@ -47,3 +47,17 @@ impl Acceleration {
 impl Component for Acceleration {
     type Storage = DenseVecStorage<Self>;
 }
+
+pub trait VectorExt {
+    fn limit(&self, speed: f32 ) -> Vector3<f32>;
+}
+
+impl VectorExt for Vector3<f32> {
+    #[inline]
+    fn limit(&self, speed: f32) -> Vector3<f32> {
+        if self.norm_squared() > speed*speed {
+            return self.normalize() * speed;
+        }
+        self.clone_owned()
+    }
+}
